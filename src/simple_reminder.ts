@@ -14,9 +14,9 @@ function sendMessage(): GoogleAppsScript.URL_Fetch.HTTPResponse {
   const USER_ID = PropertiesService.getScriptProperties().getProperty(`USER_ID_${STATUS}`);
 
   const message = {
-    username: "おくすりりまいんど",
+    username: "おくすりりまいんどv2",
     avatar_url:
-      "https://static.wikia.nocookie.net/leagueoflegends/images/1/1d/Mana_Potion_item.png/revision/latest?cb=20171223002624",
+      "https://static.wikia.nocookie.net/leagueoflegends/images/9/91/Health_Potion_item_HD.png/revision/latest/scale-to-width-down/64?cb=20220728002312",
     content: `<@${USER_ID}> お薬は飲んだか？`,
     allowed_mentions: {
       parse: ["users"],
