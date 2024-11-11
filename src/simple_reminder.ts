@@ -75,7 +75,7 @@ function fetchSheet() {
 }
 
 function getSheet(): GoogleAppsScript.Spreadsheet.Sheet {
-  const SHEET_URL = PropertiesService.getScriptProperties().getProperty("SHEET_URL");
+  const SHEET_URL = PropertiesService.getScriptProperties().getProperty("SHEET_URL")!;
   const sheet = SpreadsheetApp.openByUrl(SHEET_URL).getActiveSheet();
   return sheet;
 }
