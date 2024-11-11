@@ -1,6 +1,6 @@
 function createScheduleEmbed(): string {
   const VALID_CALENDAR_IDS = PropertiesService.getScriptProperties()
-    .getProperty("VALID_CALENDAR_IDS")
+    .getProperty("VALID_CALENDAR_IDS")!
     .split(",");
   console.log(VALID_CALENDAR_IDS);
 
@@ -76,7 +76,7 @@ function getJapaneseDay(date: Date): string {
 
 function discordHook() {
   const STATUS = PropertiesService.getScriptProperties().getProperty("STATUS");
-  const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty(`WEBHOOK_URL_${STATUS}`);
+  const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty(`WEBHOOK_URL_${STATUS}`)!;
 
   const embedTitle =
     Utilities.formatDate(getDate(1), "Asia/Tokyo", "M月d日") +
