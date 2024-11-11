@@ -1,6 +1,4 @@
-const IS_PRODUCT = false;
-
-function createSchedule() {
+function createScheduleEmbed(): string {
   const VALID_CALENDAR_IDS = PropertiesService.getScriptProperties()
     .getProperty("VALID_CALENDAR_IDS")
     .split(",");
@@ -9,13 +7,54 @@ function createSchedule() {
   let message = "";
   let startTime: string;
   let endTime: string;
-  console.log(getDate(1));
+
+  const targetDate = getDate(1);
+
+  const calendarList = CalendarApp.getAllCalendars();
+
+  if (!Array.isArray(calendarList)) {
+    console.error("カレンダーが取得できませんでした。");
+  }
+
+  for (const calendar of calendarList) {
+    // 1日後の予定を取得
+    const eventList = calendar.getEventsForDay(targetDate);
+    // 予定がない or 有効なカレンダーでない場合スキップ
+    if (eventList.length === 0 || !VALID_CALENDAR_IDS.includes(calendar.getId())) {
+      continue;
+    }
+    console.log(calendar.getName());
+    message += `### ${calendar.getName()}\n`;
+    for (const event of eventList) {
+      console.log(event.getTitle(), event.getStartTime());
+      if (
+        event.isAllDayEvent() ||
+        (!eventStartAt(event, targetDate) && !eventEndAt(event, targetDate))
+      ) {
+        // all day event
+        message += "- ` 終 日 `";
+      } else if (eventStartAt(event, targetDate)) {
+        // event starts today
+        startTime = Utilities.formatDate(event.getStartTime(), "Asia/Tokyo", "HH:mm");
+        message += `- \`${startTime}~\``;
+      } else {
+        // event ends today
+        endTime = Utilities.formatDate(event.getEndTime(), "Asia/Tokyo", "HH:mm");
+        message += `- \`~${endTime}\``;
+      }
+      message += ` \*\*${event.getTitle()}\*\*\n`;
+    }
+  }
+
+  if (message.length === 0) {
+    message = "予定はありません";
+  }
+
+  console.log(message);
+  return message;
 }
 
-function eventStartAt(
-  event: GoogleAppsScript.Calendar.CalendarEvent,
-  date: Date
-) {
+function eventStartAt(event: GoogleAppsScript.Calendar.CalendarEvent, date: Date) {
   return event.getStartTime().getDate() === date.getDate();
 }
 
