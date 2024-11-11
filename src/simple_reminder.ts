@@ -59,7 +59,12 @@ function deleteMessage(messageID: string) {
 function fetchSheet() {
   // シートからIDを読み取る → Webhookでメッセージを取得 → エモートされてたらメッセージ削除＆レコード削除
   const sheet = getSheet();
-  const range = sheet.getRange(1, 1, sheet.getLastRow());
+  const rowNum = sheet.getLastRow();
+  if (rowNum === 0) {
+    console.log("No record stored in DB.");
+    return;
+  }
+  const range = sheet.getRange(1, 1, rowNum);
   const messageIDList = range.getValues().flat();
   console.log(messageIDList);
 
