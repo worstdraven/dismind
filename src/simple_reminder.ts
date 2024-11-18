@@ -11,7 +11,7 @@ function simpleReminder() {
 function sendMessage(): GoogleAppsScript.URL_Fetch.HTTPResponse {
   const STATUS = PropertiesService.getScriptProperties().getProperty("STATUS");
   const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty(
-    `WEBHOOK_URL_REMINDER${STATUS}`
+    `WEBHOOK_URL_REMINDER_${STATUS}`
   );
   const USER_ID = PropertiesService.getScriptProperties().getProperty(`USER_ID_${STATUS}`);
 
@@ -38,7 +38,7 @@ function sendMessage(): GoogleAppsScript.URL_Fetch.HTTPResponse {
 function getMessage(messageID: string): any {
   const STATUS = PropertiesService.getScriptProperties().getProperty("STATUS");
   const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty(
-    `WEBHOOK_URL_REMINDER${STATUS}`
+    `WEBHOOK_URL_REMINDER_${STATUS}`
   );
 
   const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = { method: "get" };
@@ -52,7 +52,7 @@ function getMessage(messageID: string): any {
 function deleteMessage(messageID: string) {
   const STATUS = PropertiesService.getScriptProperties().getProperty("STATUS");
   const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty(
-    `WEBHOOK_URL_REMINDER${STATUS}`
+    `WEBHOOK_URL_REMINDER_${STATUS}`
   );
 
   const options: GoogleAppsScript.URL_Fetch.URLFetchRequestOptions = {
