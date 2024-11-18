@@ -77,7 +77,7 @@ function getJapaneseDay(date: Date): string {
 function discordHook() {
   const STATUS = PropertiesService.getScriptProperties().getProperty("STATUS");
   const WEBHOOK_URL = PropertiesService.getScriptProperties().getProperty(
-    `WEBHOOK_URL_SCHEDULE${STATUS}`
+    `WEBHOOK_URL_SCHEDULE_${STATUS}`
   )!;
 
   const embedTitle =
